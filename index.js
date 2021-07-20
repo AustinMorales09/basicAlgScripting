@@ -3,7 +3,8 @@
 
 // You are given a variable celsius representing a temperature in Celsius. Use the variable fahrenheit already defined and assign it the Fahrenheit temperature equivalent to the given Celsius temperature. Use the algorithm mentioned above to help convert the Celsius temperature to Fahrenheit.
 function convertToF(celsius) {
-    let fahrenheit;
+   var fahrenheit = (celsius * (9/5)) + 32; 
+  
     return fahrenheit;
   }
   
@@ -16,7 +17,10 @@ function convertToF(celsius) {
 
 // Your result must be a string.
 function reverseString(str) {
-    return str;
+  for (var reversedStr = "", i = str.length - 1; i >= 0; i--){
+    reversedStr += str[i];
+  }
+    return reversedStr;
   }
   
   reverseString("hello");
@@ -37,7 +41,12 @@ function reverseString(str) {
  
 //  Only integers greater than or equal to zero will be supplied to the function.
 function factorialize(num) {
-    return num;
+  var answer = 1;
+  for(var i = 1; i <= num; i++){
+    answer *= i;
+    console.log(answer)
+  }
+    return answer;
   }
   
   factorialize(5);
@@ -46,7 +55,14 @@ function factorialize(num) {
 
 // Your response should be a number.
 function findLongestWordLength(str) {
-    return str.length;
+  var words = str.split(' ');
+  var maxLength = 0;
+  for (var i = 0; i < words.length; i++){
+    if(words[i].length > maxLength){
+      maxLength = words[i].length;
+    }
+  }
+    return maxLength;
   }
   
   findLongestWordLength("The quick brown fox jumped over the lazy dog");
@@ -62,7 +78,22 @@ function findLongestWordLength(str) {
 // Remember, you can iterate through an array with a simple for loop, and access each member with array syntax arr[i].
 
 function largestOfFour(arr) {
-    return arr;
+ var results = [];
+ for (var n = 0; n < arr.length; n++){
+   var largestNum = arr[n][0];
+
+   for (var i = 1; i < arr[n].length; i++){
+
+     if(arr[n][i] > largestNum){
+
+       largestNum = arr[n][i];
+     }
+   }
+   results[n] = largestNum;
+ }
+
+return results;
+
   }
   
   largestOfFour([[4, 5, 1, 3], [13, 27, 18, 26], [32, 35, 37, 39], [1000, 1001, 857, 1]]);
@@ -73,7 +104,7 @@ function largestOfFour(arr) {
  
  
 function confirmEnding(str, target) {
-    return str;
+    return str.slice(str.length - target.length) === target;
   }
   
   confirmEnding("Bastian", "n");
@@ -90,7 +121,13 @@ function confirmEnding(str, target) {
 //7.) Basic Algorithm Scripting: Repeat a String Repeat a String
 // Repeat a given string str (first argument) for num times (second argument). Return an empty string if num is not a positive number. For the purpose of this challenge, do not use the built-in .repeat() method.
 function repeatStringNumTimes(str, num) {
-    return str;
+    if(num < 1){
+      return '';
+    } else if (num === 1) {
+      return str;
+    } else {
+      return str + repeatStringNumTimes(str, num -1)
+    }
   }
   
   repeatStringNumTimes("abc", 3);
@@ -100,7 +137,12 @@ function repeatStringNumTimes(str, num) {
 //Truncate means to shorten something by cutting off the top or end
 
 function truncateString(str, num) {
-    return str;
+  if (str.length > num){
+    return str.slice(0, num) + "..."
+  } else {
+     return str;
+  }
+   
   }
   
   truncateString("A-tisket a-tasket A green and yellow basket", 8);
@@ -109,7 +151,13 @@ function truncateString(str, num) {
 //   Create a function that looks through an array arr and returns the first element in it that passes a 'truth test'. This means that given an element x, the 'truth test' is passed if func(x) is true. If no element passes the test, return undefined.
 function findElement(arr, func) {
     let num = 0;
-    return num;
+    for(var i = 0; i < arr.length; i++){
+      num = arr[i];
+      if(func(num)){
+        return num
+      }
+    }
+    return undefined;
   }
   
   findElement([1, 2, 3, 4], num => num % 2 === 0);
@@ -119,7 +167,7 @@ function findElement(arr, func) {
 // Boolean primitives are true and false.
 
 function booWho(bool) {
-    return bool;
+    return typeof bool === "boolean";
   }
   
   booWho(null);
@@ -128,7 +176,11 @@ function booWho(bool) {
 
 //   For the purpose of this exercise, you should also capitalize connecting words like "the" and "of".
 function titleCase(str) {
-    return str;
+  var convertToArray = str.toLowerCase().split(' ');
+  var result = convertToArray.map(function(val){
+    return val.replace(val.charAt(0), val.charAt(0).toUpperCase());
+  });
+    return result.join(' ');
   }
   
   titleCase("I'm a little tea pot");
@@ -145,7 +197,12 @@ function titleCase(str) {
 // Return the resulting array. The input arrays should remain the same after the function runs.
 
 function frankenSplice(arr1, arr2, n) {
-    return arr2;
+  let localArray = arr2.slice();
+  for(let i = 0; i < arr1.length; i++){
+    localArray.splice(n, 0, arr1[i]);
+    n++;
+  }
+    return localArray;
   }
   
   frankenSplice([1, 2, 3], [4, 5, 6], 1);
@@ -157,7 +214,11 @@ function frankenSplice(arr1, arr2, n) {
 
 // Hint: Try converting each value to a Boolean.
 function bouncer(arr) {
-    return arr;
+  let newArray = [];
+  for(let i = 0; i < arr.length; i++){
+    if(arr[i]) newArray.push(arr[i]);
+  }
+  return newArray;
   }
   
   bouncer([7, "ate", "", false, 9]);
@@ -175,12 +236,29 @@ We return the new array (newArray).*/
 
 // Likewise, getIndexToIns([20,3,5], 19) should return 2 because once the array has been sorted it will look like [3,5,20] and 19 is less than 20 (index 2) and greater than 5 (index 1).
 
-
 function getIndexToIns(arr, num) {
-    return num;
-  }
+  // Find my place in this sorted array.
+  var times = arr.length; // runs the for loop once for each thing in the array
+  var count = 0;
+  for (var i = 0; i < times; i++) {
+    if (num > arr[i]) {
+      count++;
+    }
+  } // counts how many array numbers are smaller than num
+  return count; // the above equals num's position in a sorted array
+
+}
+
+
+// function getIndexToIns(arr, num) {
+//     arr.push(num); 
+//     arr.sort(function(a,b){
+//       return a-b;
+//     });
+//     return arr.indexOf(num);
+//   }
   
-  getIndexToIns([40, 60], 50);
+//   getIndexToIns([40, 60], 50);
 
 //15.) Basic Algorithm Scripting: Mutations
 // Return true if the string in the first element of the array contains all of the letters of the string in the second element of the array.
@@ -191,7 +269,13 @@ function getIndexToIns(arr, num) {
 
 // Lastly, ["Alien", "line"], should return true because all of the letters in "line" are present in "Alien".
 function mutation(arr) {
-    return arr;
+  var test = arr[1].toLowerCase();
+  var target = arr[0].toLowerCase();
+
+  for(var i = 0; i < test.length; i++){
+    if(target.indexOf(test[i]) < 0) return false; 
+  }
+    return true;
   }
   
   mutation(["hello", "hey"]);
@@ -206,7 +290,11 @@ If they are all found, the loop will finish without returning anything and we ge
 
 
 function chunkArrayInGroups(arr, size) {
-    return arr;
+  var arr2 = []; 
+  for(var i = 0; i < arr.length; i += size){
+    arr2.push(arr.slice(i, i+ size));
   }
+  return arr2
+}
   
   chunkArrayInGroups(["a", "b", "c", "d"], 2);
